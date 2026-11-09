@@ -24,6 +24,6 @@ Output format: scene headings, action, character cues, dialogue. Keep character 
 
 SOURCE:
 ${body.sourceText}`;
-  const res = await ai.models.generateContent({ model: 'gemini-2.0-flash', contents: prompt });
+  const res = await ai.models.generateContent({ model: 'gemini-3.8-flash', contents: prompt });
   return new Response(JSON.stringify({ script: res.text }), { headers: { 'Content-Type': 'application/json' } });
 };

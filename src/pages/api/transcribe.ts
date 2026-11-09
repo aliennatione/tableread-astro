@@ -7,7 +7,7 @@ export const POST: APIRoute = async ({ request }) => {
   if (!apiKey) return new Response(JSON.stringify({ error: 'GEMINI_API_KEY missing' }), { status: 500 });
   const ai = new GoogleGenAI({ apiKey });
   const res = await ai.models.generateContent({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-3.8-flash',
     contents: [{ role: 'user', parts: [{ inlineData: { data: audioBase64, mimeType: mimeType || 'audio/mp3' } }, { text: 'Transcribe this audio verbatim.' }] }],
   });
   return new Response(JSON.stringify({ transcript: res.text }), { headers: { 'Content-Type': 'application/json' } });
