@@ -3,6 +3,8 @@
   let mode = 'direct';
   let length = 'full';
   let model = 'gemini-3.8-flash';
+  let models: string[] = ['gemini-3.8-flash'];
+  if (typeof window !== 'undefined') { fetch('/api/models',{headers:{'X-Gemini-Key': (typeof localStorage!=='undefined'?localStorage.getItem('geminiKey')||'':'')}}).then(r=>r.json()).then(d=>{ if(d.models?.length) models=d.models; }).catch(()=>{}); }
   let loading = false;
   let script = '';
 
@@ -49,8 +51,7 @@
     <div>
       <label class="block text-sm font-medium">Modello</label>
       <select bind:value={model} class="w-full border rounded p-2">
-        <option value="gemini-3.8-flash">Gemini 3.8 Flash</option>
-        <option value="gemini-3.8-flash-tts">Gemini 3.8 Flash TTS</option>
+        {#each models as m}<option value={m}>{m}</option>{/each}
       </select>
     </div>
   </div>
