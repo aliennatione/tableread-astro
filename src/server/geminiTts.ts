@@ -204,7 +204,6 @@ export function buildConversationalRequest(
   languageCode?: string
 ): Record<string, unknown> {
   const speechConfig: Record<string, unknown> = {
-    mode: 'conversational',
     speakers: speakers.map((s) => ({ speaker: s.speaker, voice: s.voice })),
   };
   if (languageCode) speechConfig.language_code = languageCode;
