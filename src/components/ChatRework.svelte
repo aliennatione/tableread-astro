@@ -10,7 +10,7 @@
     loading = true;
     const res = await fetch('/api/generate-script', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Gemini-Key': (typeof localStorage!=='undefined'?localStorage.getItem('geminiKey')||'':'') },
       body: JSON.stringify({ sourceText: script + '\n\nUSER REQUEST: ' + input, mode: 'heavy', length: 'full', targetLang: 'Italian' }),
     });
     const data = await res.json();

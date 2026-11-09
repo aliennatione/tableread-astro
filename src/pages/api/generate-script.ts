@@ -3,7 +3,7 @@ import { GoogleGenAI } from '@google/genai';
 
 export const POST: APIRoute = async ({ request }) => {
   const { sourceText, mode, length, targetLang } = await request.json();
-  const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+  const apiKey = request.headers.get('x-gemini-key') || import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) return new Response(JSON.stringify({ error: 'GEMINI_API_KEY missing' }), { status: 500 });
   const ai = new GoogleGenAI({ apiKey });
   const prompt = `You are a screenplay writer. Convert the following source into a screenplay in ${targetLang || 'Italian'}.

@@ -1,16 +1,18 @@
 <script lang="ts">
+  import { parseScreenplay, generateDefaultCast, buildSynthesisTurns } from '../utils/screenplayParser';
   export let script: string = '';
   let audioUrl: string | null = null;
   let loading = false;
 
   async function synthesize() {
     loading = true;
-    // Minimal: treat whole script as one turn, one speaker
-    const turns = [{ speaker: 'Narrator', text: script, style: 'neutral' }];
-    const speakers = [{ speaker: 'Narrator', voice: 'Kore' }];
+    const { elements } = parseScreenplay(script);
+    const cast = generateDefaultCast(elements.map(e=>e.character).filter(Boolean) as string[]);
+    const turns = buildSynthesisTurns(elements, cast);
+    const speakers = Object.values(cast).map((c:any)=>({ speaker: c.name, voice: c.voice }));
     const res = await fetch('/api/tts', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-Gemini-Key': (typeof localStorage!=='undefined'?localStorage.getItem('geminiKey')||'':'') },
       body: JSON.stringify({ turns, speakers }),
     });
     const data = await res.json();

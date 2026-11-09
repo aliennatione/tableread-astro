@@ -3,7 +3,7 @@ import { synthesizeConversational, type TurnRequest } from '../../server/geminiT
 
 export const POST: APIRoute = async ({ request }) => {
   const { turns, speakers } = await request.json() as { turns: TurnRequest[]; speakers: { speaker: string; voice: string }[] };
-  const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+  const apiKey = request.headers.get('x-gemini-key') || import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
   if (!apiKey) return new Response(JSON.stringify({ error: 'GEMINI_API_KEY missing' }), { status: 500 });
   try {
     const audio = await synthesizeConversational(apiKey, turns, speakers);
