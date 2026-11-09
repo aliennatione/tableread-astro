@@ -1,5 +1,8 @@
-import { CharacterProfile, ScriptElement, GeminiTtsPayload, SonicBoomPayload } from '../types';
-import { Direction } from './directions';
+type ScriptElement = any;
+type GeminiTtsPayload = any;
+type SonicBoomPayload = any;
+type CharacterProfile = any;
+type Direction = any;
 
 // Extended voice library for gemini-3.8-flash-tts & Gemini speech models
 export const PRESET_VOICES = [
