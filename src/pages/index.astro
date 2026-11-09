@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SourceIntake from '../components/SourceIntake.svelte';
 ---
 <Layout title="Table Read">
-  <main class="p-6">
-    <h1 class="text-2xl font-bold">Remix Table Read</h1>
-    <p class="mt-2 text-gray-500">Migration in progress: Astro + Svelte.</p>
+  <main>
+    <h1 class="p-6 text-2xl font-bold">Remix Table Read</h1>
+    <SourceIntake client:load />
   </main>
 </Layout>
