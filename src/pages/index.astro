@@ -1,10 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import SourceIntake from '../components/SourceIntake.svelte';
+import TableRead from '../components/TableRead.svelte';
+import ChatRework from '../components/ChatRework.svelte';
 ---
 <Layout title="Table Read">
-  <main>
+  <main class="max-w-4xl mx-auto">
     <h1 class="p-6 text-2xl font-bold">Remix Table Read</h1>
     <SourceIntake client:load />
+    <TableRead client:load script="" />
+    <ChatRework client:load script="" />
   </main>
 </Layout>
