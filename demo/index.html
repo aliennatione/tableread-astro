@@ -4,25 +4,38 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Table Read — Demo</title>
-<style>body{font-family:system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}textarea{width:100%;min-height:120px}button{padding:.5rem 1rem;margin:.5rem 0}pre{white-space:pre-wrap;background:#f5f5f5;padding:1rem;border-radius:.5rem}</style>
+<style>body{font-family:system-ui,sans-serif;max-width:800px;margin:2rem auto;padding:0 1rem}textarea,select,input{width:100%;padding:.5rem;margin:.25rem 0}button{padding:.5rem 1rem;margin:.5rem 0}pre{white-space:pre-wrap;background:#f5f5f5;padding:1rem;border-radius:.5rem}</style>
 </head>
 <body>
 <h1>Remix Table Read — Demo statica</h1>
-<p>Incolla una fonte (testo). Output sceneggiatura in italiano via Gemini (chiave utente).</p>
-<input id="key" type="password" placeholder="Gemini API key" style="width:100%;padding:.5rem" />
+<input id="key" type="password" placeholder="Gemini API key" />
+<select id="model"></select>
 <select id="mode"><option value="direct">Diretta</option><option value="light">Leggera</option><option value="heavy">Pesante</option></select>
 <select id="len"><option value="full">Completa</option><option value="summary">Riassuntiva</option></select>
 <textarea id="src" placeholder="Fonte..."></textarea>
 <button onclick="gen()">Genera sceneggiatura</button>
 <pre id="out"></pre>
 <script>
+const keyEl=document.getElementById('key');
+async function loadModels(){
+  const k=keyEl.value; if(!k) return;
+  const r=await fetch('https://generativelanguage.googleapis.com/v1beta/models?key='+encodeURIComponent(k));
+  const d=await r.json();
+  const sel=document.getElementById('model');
+  sel.innerHTML='';
+  (d.models||[]).filter(m=>m.supportedGenerationMethods?.includes('generateContent')).forEach(m=>{
+    const o=document.createElement('option'); o.value=m.name.replace('models/',''); o.textContent=m.name; sel.appendChild(o);
+  });
+}
+keyEl.addEventListener('change', loadModels);
 async function gen(){
-  const key=document.getElementById('key').value;
+  const key=keyEl.value;
   const src=document.getElementById('src').value;
   const mode=document.getElementById('mode').value;
   const len=document.getElementById('len').value;
+  const model=document.getElementById('model').value||'gemini-3.8-flash';
   const prompt=`Convert the following source into a screenplay in Italian. Mode: ${mode}. Length: ${len}.\n\nSOURCE:\n${src}`;
-  const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key='+encodeURIComponent(key),{
+  const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+model+':generateContent?key='+encodeURIComponent(key),{
     method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({contents:[{parts:[{text:prompt}]}]})
   });
