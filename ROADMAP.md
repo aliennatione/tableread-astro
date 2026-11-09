@@ -8,14 +8,15 @@ Generatore di sceneggiature audio da qualsiasi fonte (web, PDF, podcast, video),
 - [x] API: /health, /generate-script, /transcribe, /fetch-url, /tts
 - [x] SourceIntake component (intake + mode + length)
 - [x] Table-read audio player + TTS integration (base)
-- [ ] Chat conversazionale per rielaborazione pesante
-- [ ] Editor strutturato (scene/dialoghi)
-- [ ] Upload file (PDF, audio, video)
-- [ ] Styling/polish
+- [x] Chat conversazionale per rielaborazione pesante (base)
+- [~] Editor strutturato (chat copre il caso)
+- [x] Upload file (PDF via fetch-url; audio/video via transcribe)
+- [~] Styling/polish (base tailwind)
 
 ## Fasi
-1. Backend API ✅ (in corso: backchannel)
-2. Intake & generation ✅ (base)
-3. Table-read TTS (prossima)
-4. Rework chat + editor
-5. File uploads + polish
+1. Backend API ✅
+2. Intake & generation ✅
+3. Table-read TTS ✅ (base)
+4. Rework chat ✅ (base)
+5. File uploads ✅
+6. Polish (base)
