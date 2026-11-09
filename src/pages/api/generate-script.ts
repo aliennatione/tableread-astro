@@ -7,6 +7,7 @@ const Body = z.object({
   mode: z.enum(['direct','light','heavy']).default('direct'),
   length: z.enum(['full','summary']).default('full'),
   targetLang: z.string().default('Italian'),
+  model: z.string().optional(),
 });
 
 export const POST: APIRoute = async ({ request }) => {
@@ -24,6 +25,6 @@ Output format: scene headings, action, character cues, dialogue. Keep character 
 
 SOURCE:
 ${body.sourceText}`;
-  const res = await ai.models.generateContent({ model: 'gemini-3.8-flash', contents: prompt });
+  const res = await ai.models.generateContent({ model: body.model || 'gemini-3.8-flash', contents: prompt });
   return new Response(JSON.stringify({ script: res.text }), { headers: { 'Content-Type': 'application/json' } });
 };
