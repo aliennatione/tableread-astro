@@ -7,7 +7,7 @@ Generatore di sceneggiature audio da qualsiasi fonte (web, PDF, podcast, video),
 - [x] Scaffold Astro 7 + Svelte + Node adapter
 - [x] API: /health, /generate-script, /transcribe, /fetch-url, /tts
 - [x] SourceIntake component (intake + mode + length)
-- [ ] Table-read audio player + TTS integration
+- [x] Table-read audio player + TTS integration (base)
 - [ ] Chat conversazionale per rielaborazione pesante
 - [ ] Editor strutturato (scene/dialoghi)
 - [ ] Upload file (PDF, audio, video)
